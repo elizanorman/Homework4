@@ -58,24 +58,53 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </style>
 
 
-<script src="HW4_files/libs/clipboard/clipboard.min.js"></script>
-<script src="HW4_files/libs/quarto-html/quarto.js"></script>
-<script src="HW4_files/libs/quarto-html/popper.min.js"></script>
-<script src="HW4_files/libs/quarto-html/tippy.umd.min.js"></script>
-<script src="HW4_files/libs/quarto-html/anchor.min.js"></script>
-<link href="HW4_files/libs/quarto-html/tippy.css" rel="stylesheet">
-<link href="HW4_files/libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles">
-<script src="HW4_files/libs/bootstrap/bootstrap.min.js"></script>
-<link href="HW4_files/libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="HW4_files/libs/bootstrap/bootstrap.min.css" rel="stylesheet" id="quarto-bootstrap" data-mode="light">
+<script src="site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="site_libs/clipboard/clipboard.min.js"></script>
+<script src="site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="site_libs/quarto-search/fuse.min.js"></script>
+<script src="site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="./">
+<script src="site_libs/quarto-html/quarto.js"></script>
+<script src="site_libs/quarto-html/popper.min.js"></script>
+<script src="site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="site_libs/quarto-html/anchor.min.js"></script>
+<link href="site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="site_libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="site_libs/bootstrap/bootstrap.min.css" rel="stylesheet" id="quarto-bootstrap" data-mode="light">
+<script id="quarto-search-options" type="application/json">{
+  "location": "sidebar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "start",
+  "type": "textbox",
+  "limit": 20,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit"
+  }
+}</script>
 
 
 </head>
 
 <body class="fullcontent">
 
-<div id="quarto-content" class="page-columns page-rows-contents page-layout-article">
-
+<div id="quarto-search-results"></div>
+<!-- content -->
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article">
+<!-- sidebar -->
+<!-- margin-sidebar -->
+    
+<!-- main -->
 <main class="content" id="quarto-document-content">
 
 <header id="title-block-header" class="quarto-title-block default">
@@ -297,13 +326,13 @@ $RMSE
 <pre><code>List of 10
  $ url        : chr "https://newsapi.org/v2/everything?q=tesla&amp;from=2024-05-25&amp;sortBy=publishedAt&amp;apiKey=da7c72240fbd4e70bbad7b808f4a3428"
  $ status_code: int 200
- $ headers    :List of 16
+ $ headers    :List of 14
   ..- attr(*, "class")= chr [1:2] "insensitive" "list"
  $ all_headers:List of 1
  $ cookies    :'data.frame':    0 obs. of  7 variables:
- $ content    : raw [1:88281] 7b 22 73 74 ...
- $ date       : POSIXct[1:1], format: "2024-06-26 11:12:15"
- $ times      : Named num [1:6] 0 0.278 0.374 0.488 0.7 ...
+ $ content    : raw [1:87246] 7b 22 73 74 ...
+ $ date       : POSIXct[1:1], format: "2024-06-26 11:20:19"
+ $ times      : Named num [1:6] 0 0.294 0.328 0.4 0.682 ...
   ..- attr(*, "names")= chr [1:6] "redirect" "namelookup" "connect" "pretransfer" ...
  $ request    :List of 7
   ..- attr(*, "class")= chr "request"
@@ -322,16 +351,16 @@ $RMSE
 <pre><code># A tibble: 100 × 8
    source$id $name author title description url   urlToImage publishedAt content
    &lt;chr&gt;     &lt;chr&gt; &lt;chr&gt;  &lt;chr&gt; &lt;chr&gt;       &lt;chr&gt; &lt;chr&gt;      &lt;chr&gt;       &lt;chr&gt;  
- 1 the-verge The … Thoma… Tesl… "The two N… http… https://c… 2024-06-25… "Tesla…
- 2 &lt;NA&gt;      Thef… &lt;NA&gt;   Tesl… "See the r… http… https://t… 2024-06-25… "Earni…
- 3 &lt;NA&gt;      Yaho… &lt;NA&gt;   道指… "雖然剛有…  http… &lt;NA&gt;       2024-06-25… "If yo…
- 4 &lt;NA&gt;      Clea… Steve… Cali… "The Calif… http… https://c… 2024-06-25… "Sign …
- 5 associat… Asso… ap ne… For … "Tesla is … http… https://d… 2024-06-25… "DETRO…
- 6 the-verge The … Andre… Uber… "Uber Frei… http… https://c… 2024-06-25… "Uber …
- 7 &lt;NA&gt;      Febe… Bobby… Tesl… "Från förs… http… https://s… 2024-06-25… "+\r\n…
- 8 &lt;NA&gt;      Secu… Pierl… Wiki… "WikiLeaks… http… https://s… 2024-06-25… "Wikil…
- 9 &lt;NA&gt;      Inve… Inves… Tesl… "Tesla rec… http… https://i… 2024-06-25… "Tesla…
-10 &lt;NA&gt;      Inve… Inves… Tesl… "Tesla: Ba… http… https://i… 2024-06-25… "Barcl…
+ 1 &lt;NA&gt;      Febe… Wille… Kine… "Chang’e-6… http… https://i… 2024-06-25… "+\r\n…
+ 2 &lt;NA&gt;      Over… Proxv… Tesl… "Более 19 … http… https://o… 2024-06-25… "Tesla…
+ 3 &lt;NA&gt;      Yaho… &lt;NA&gt;   Tesl…  &lt;NA&gt;       http… &lt;NA&gt;       2024-06-25… "If yo…
+ 4 &lt;NA&gt;      Hibr… Diego… La p… "Tesla hiz… http… https://w… 2024-06-25… "Tesla…
+ 5 the-verge The … Thoma… Tesl… "The two N… http… https://c… 2024-06-25… "Tesla…
+ 6 &lt;NA&gt;      Thef… &lt;NA&gt;   Tesl… "See the r… http… https://t… 2024-06-25… "Earni…
+ 7 &lt;NA&gt;      Yaho… &lt;NA&gt;   道指… "雖然剛有…  http… &lt;NA&gt;       2024-06-25… "If yo…
+ 8 &lt;NA&gt;      Clea… Steve… Cali… "The Calif… http… https://c… 2024-06-25… "Sign …
+ 9 associat… Asso… ap ne… For … "Tesla is … http… https://d… 2024-06-25… "DETRO…
+10 the-verge The … Andre… Uber… "Uber Frei… http… https://c… 2024-06-25… "Uber …
 # ℹ 90 more rows</code></pre>
 </div>
 </div>
@@ -354,10 +383,11 @@ $RMSE
 <pre><code># A tibble: 0 × 0</code></pre>
 </div>
 </div>
+
+
 </section>
 
-</main>
-<!-- /main column -->
+</main> <!-- /main -->
 <script id="quarto-html-after-body" type="application/javascript">
 window.document.addEventListener("DOMContentLoaded", function (event) {
   const toggleBodyColorMode = (bsSheetEl) => {
