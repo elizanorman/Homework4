@@ -1,0 +1,185 @@
+---
+title: "Homework 4"
+author: "Eliza Norman"
+format: html
+editor: visual
+---
+
+```{r, setup}
+#| echo: false
+#| warning: false
+library(jsonlite)
+library(tidyverse)
+
+```
+
+## Task 1: Conceptual Questions
+
+1. The lapply() function applies a function to each element of a list. The purrr equivalent is map()
+
+2.
+```{r}
+#| eval: false
+newList <- lapply(list, function(x) cor(x, method = "kendall"))
+```
+
+3. The purrr function output is consistent, with many helper functions, and the purrr functions have unified syntax.
+
+4. A side-effect function is one that produces output (like plot)
+
+5. The variable sd would only exist inside the function that you named it in, so it wouldn't conflict with the sd function
+
+## Task 2: Writing R Functions
+
+1. Creating the RMSE function getRMSE
+
+```{r}
+getRMSE <- function(responses, predictions, ...){
+  numerator <- ((responses - predictions)^2)
+  return(sqrt(mean(numerator, ...)))
+}
+
+```
+2. Testing the RMSE function on random values
+
+```{r}
+set.seed(10)
+n <- 100
+x <- runif(n)
+resp <- 3 + 10*x + rnorm(n)
+pred <- predict(lm(resp ~ x), data.frame(x))
+
+getRMSE(resp, pred)
+
+resp[99:100] <- c(NA_real_, NA_real_)
+pred2 <- predict(lm(resp ~ x), data.frame(x))
+
+getRMSE(resp, pred2, na.rm = TRUE)
+getRMSE(resp, pred2)
+
+```
+
+3. Creating the MAE function
+
+```{r}
+getMAE <- function(responses, predictions, ...){
+  numerator <- abs(responses - predictions)
+  return(mean(numerator, ...))
+}
+```
+
+
+4. Testing the MAE function on random values
+
+```{r}
+set.seed(10)
+n <- 100
+x <- runif(n)
+resp <- 3 + 10*x + rnorm(n)
+pred <- predict(lm(resp ~ x), data.frame(x))
+
+getMAE(resp, pred)
+
+resp[99:100] <- c(NA_real_, NA_real_)
+pred2 <- predict(lm(resp ~ x), data.frame(x))
+
+getMAE(resp, pred2, na.rm = TRUE)
+getMAE(resp, pred2)
+
+```
+
+5. Creating a wrapper function to find the desired metrics with a single function call
+
+```{r}
+myWrapper <- function(metrics = "both", responses, predictions){
+  if(is.vector(responses) & is.vector(predictions)){
+    if(is.atomic(responses) & is.atomic(predictions)){
+      if(is.numeric(responses) & is.numeric(predictions)){
+        if(metrics == "both"){
+          return(list(MAE = getMAE(responses, predictions), RMSE = getRMSE(responses, predictions)))
+        }else if(metrics == "RMSE"){
+          return(list(RMSE = getRMSE(responses, predictions)))
+        }else if(metrics == "MAE"){
+          return(list(MAE = getMAE(responses,predictions)))
+        }else{
+          stop("Need to specify RMSE or MAE to be returned")
+        }
+      }else{
+        stop("Could not execute. Please make sure both input vectors are numeric")
+      }
+    }else{
+      stop("Could not execute. Please make sure both input vectors are atomic")
+    }
+  }else{
+    stop("Could not execute. Please make sure both inputs are vectors")
+  }
+}  
+myWrapper("RMSE", responses = c(3,4,5), predictions= c(4,5,6))
+myWrapper("both", responses = c(3,4,5), predictions= c(4,5,6))
+```
+
+6. Testing the wrapper function with random values and an incorrect data type
+
+```{r}
+#| error: true
+
+set.seed(10)
+n <- 100
+x <- runif(n)
+resp <- 3 + 10*x + rnorm(n)
+pred <- predict(lm(resp ~ x), data.frame(x))
+
+myWrapper("RMSE", resp, pred)
+myWrapper("MAE", resp, pred)
+myWrapper("both", resp, pred)
+
+
+resp[99:100] <- c(NA_real_, NA_real_)
+pred2 <- predict(lm(resp ~ x), data.frame(x))
+
+myWrapper("RMSE", resp, pred2)
+myWrapper("MAE", resp, pred2)
+myWrapper("both", resp, pred2)
+
+myWrapper("RMSE", as.data.frame(resp), pred2)
+
+
+```
+
+
+## Task 3: Querying an API and Tidy-Style Function
+
+
+1. Using GET() from the httr package to return information about tesla articles and store as teslaInfo object
+
+```{r}
+teslaNews <- "https://newsapi.org/v2/everything?q=tesla&from=2024-05-25&sortBy=publishedAt&apiKey=da7c72240fbd4e70bbad7b808f4a3428"
+teslaInfo <- httr::GET(teslaNews)
+str(teslaInfo, max.level = 1)
+```
+
+
+2. Parse this and store the "articles" column as a tibble
+
+```{r}
+parsed <- fromJSON(rawToChar(teslaInfo$content))
+info2 <- as_tibble(parsed$articles)
+info2
+```
+
+
+3. Creating a function so that the user can query this API and find any article with the given title, from a given date until now, using their API key
+
+```{r}
+queryAPIFunction <- function(title, userTime, key){
+  news <- paste("https://newsapi.org/v2/everything?q=", title, "&from=", userTime, "&apiKey=", key, sep = "")
+  APIresponse <- httr::GET(news)
+  parsed <- fromJSON(rawToChar(APIresponse$content))
+  return(as_tibble(parsed$articles))
+}
+queryAPIFunction(title = "Tesla%20recalls%20thousands%20of%20Cybertrucks%20over%20windshield%20wiper,%20trunk%20bed%20trim%20issues%20-%20Fox%20Business", userTime = "2024-05-26", key = "da7c72240fbd4e70bbad7b808f4a3428")
+
+queryAPIFunction(title = "Canned%20coffee%20products%20recalled%20due%20to%20food%20poisoning%20risk%20-%20WPRI.com", userTime = "2024-05-26", key = "da7c72240fbd4e70bbad7b808f4a3428")
+
+```
+
